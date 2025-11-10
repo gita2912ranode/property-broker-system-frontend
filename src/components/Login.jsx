@@ -1,0 +1,82 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../services/AuthService";
+ 
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+ 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await AuthService.login({ username, password });
+      navigate("/welcome");
+    } catch {
+      setError("Invalid username or password");
+    }
+  };
+ 
+  const styles = {
+    container: {
+      height: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#fff5f5",
+    },
+    card: {
+      width: "400px",
+      padding: "30px",
+      borderRadius: "10px",
+      boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+      backgroundColor: "#ffffff",
+    },
+    button: {
+      backgroundColor: "#c1121f",
+      border: "none",
+      color: "#fff",
+      padding: "10px",
+      width: "100%",
+      borderRadius: "5px",
+      fontSize: "1rem",
+    },
+  };
+ 
+  return (
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h3 className="text-center mb-3" style={{ color: "#b30000" }}>
+          Login
+        </h3>
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label>Username</label>
+            <input
+              type="text"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <div className="text-danger mb-2">{error}</div>}
+          <button type="submit" style={styles.button}>
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
