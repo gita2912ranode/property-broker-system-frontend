@@ -9,6 +9,8 @@ import PropertySearch from "./components/PropertySearch";
 import AddProperty from "./components/AddProperty";
 import MyProperties from "./components/myProperties";
 import UpdateProperty from "./components/UpdateProperty";
+import PropertyDetails from "./components/PropertyDetails";
+import MyBookings from "./components/MyBookings";
  
 function App() {
   return (
@@ -49,6 +51,8 @@ function App() {
   }
 />
 <Route path="/update-property/:id" element={<UpdateProperty />} />
+<Route path="/properties/:id" element={<PropertyDetails />} />
+<Route path="/my-bookings" element={<MyBookings />} />
       </Routes>
     </Router>
   );

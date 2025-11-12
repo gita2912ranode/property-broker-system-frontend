@@ -54,7 +54,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await AuthService.login({ username, password });
-      navigate("/welcome");
+      navigate("/properties");
     } catch {
       setError("Invalid username or password");
     }

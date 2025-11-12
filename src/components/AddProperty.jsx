@@ -56,7 +56,8 @@ export default function AddProperty() {
  
     try {
       const token = user?.token;
-      const ownerId = user?.id; // Assuming your JWT user object contains `id`
+      const ownerId = user?.id; // assuming your JWT user object contains `id`
+ 
       const response = await axios.post(
         `http://localhost:9091/api/properties?ownerId=${ownerId}`,
         property,
@@ -66,7 +67,7 @@ export default function AddProperty() {
       );
  
       alert("✅ Property added successfully!");
-      navigate("/properties");
+      navigate("/my-properties");
     } catch (error) {
       console.error("Error adding property:", error);
       alert("❌ Failed to add property. Please try again.");
@@ -78,7 +79,6 @@ export default function AddProperty() {
   return (
     <>
       <Navbar />
- 
       <div className="container" style={styles.container}>
         <h3 style={{ color: "#b30000", fontWeight: "bold" }}>
           🏠 Add New Property
@@ -87,6 +87,7 @@ export default function AddProperty() {
  
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
+            {/* Title */}
             <div className="col-md-6">
               <label className="form-label">Title</label>
               <input
@@ -97,6 +98,8 @@ export default function AddProperty() {
                 required
               />
             </div>
+ 
+            {/* Property Type */}
             <div className="col-md-6">
               <label className="form-label">Property Type</label>
               <input
@@ -108,6 +111,8 @@ export default function AddProperty() {
                 required
               />
             </div>
+ 
+            {/* Description */}
             <div className="col-md-12">
               <label className="form-label">Description</label>
               <textarea
@@ -119,6 +124,22 @@ export default function AddProperty() {
                 required
               ></textarea>
             </div>
+ 
+            {/* ✅ Address (NEW FIELD ADDED) */}
+            <div className="col-md-12">
+              <label className="form-label">Address</label>
+              <textarea
+                name="address"
+                value={property.address}
+                onChange={handleChange}
+                className="form-control"
+                rows="2"
+                placeholder="Enter full property address"
+                required
+              ></textarea>
+            </div>
+ 
+            {/* Price & Area */}
             <div className="col-md-6">
               <label className="form-label">Price (₹)</label>
               <input
@@ -138,9 +159,11 @@ export default function AddProperty() {
                 value={property.areaSqft}
                 onChange={handleChange}
                 className="form-control"
+                placeholder="e.g., 1200"
               />
             </div>
  
+            {/* City / State / Country */}
             <div className="col-md-4">
               <label className="form-label">City</label>
               <input
@@ -173,6 +196,7 @@ export default function AddProperty() {
               />
             </div>
  
+            {/* Zip / Beds / Baths */}
             <div className="col-md-4">
               <label className="form-label">Zipcode</label>
               <input
@@ -180,6 +204,7 @@ export default function AddProperty() {
                 value={property.zipcode}
                 onChange={handleChange}
                 className="form-control"
+                placeholder="411001"
               />
             </div>
             <div className="col-md-4">
@@ -190,6 +215,7 @@ export default function AddProperty() {
                 value={property.bedrooms}
                 onChange={handleChange}
                 className="form-control"
+                placeholder="e.g., 3"
               />
             </div>
             <div className="col-md-4">
@@ -200,9 +226,11 @@ export default function AddProperty() {
                 value={property.bathrooms}
                 onChange={handleChange}
                 className="form-control"
+                placeholder="e.g., 2"
               />
             </div>
  
+            {/* Image */}
             <div className="col-md-12">
               <label className="form-label">Property Image URL</label>
               <input
@@ -214,7 +242,8 @@ export default function AddProperty() {
               />
             </div>
  
-            <div className="col-12 text-end">
+            {/* Submit */}
+            <div className="col-12 text-end mt-3">
               <button
                 type="submit"
                 style={styles.redButton}

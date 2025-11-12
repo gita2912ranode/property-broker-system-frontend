@@ -85,7 +85,9 @@ export default function Navbar() {
       {/* ✅ Left: Brand + Logo */}
       <div style={styles.brandContainer} onClick={() => navigate("/welcome")}>
         <div style={styles.logoCircle}>B</div>
-        <div style={styles.brandText}>Brokerly<span style={{ fontWeight: "400" }}>.com</span></div>
+        <div style={styles.brandText}>
+          Brokerly<span style={{ fontWeight: "400" }}>.com</span>
+        </div>
       </div>
  
       {/* ✅ Right: Navigation Links + User Info */}
@@ -99,15 +101,16 @@ export default function Navbar() {
  
         {user && (
           <>
-         <span style={styles.link} onClick={() => navigate("/my-properties")}>
-      🏡 My Properties
-    </span>
-    <span style={styles.link} onClick={() => navigate("/add-property")}>
-      ➕ Add Property
-    </span>
-            <span style={styles.userBox}>
-              👤 {user.username} 
+            <span style={styles.link} onClick={() => navigate("/my-properties")}>
+              🏡 My Properties
             </span>
+ 
+            {/* ✅ NEW LINK: My Bookings */}
+            <span style={styles.link} onClick={() => navigate("/my-bookings")}>
+              📋 My Bookings
+            </span>
+ 
+            <span style={styles.userBox}>👤 {user.username}</span>
             <button style={styles.logoutBtn} onClick={handleLogout}>
               Logout
             </button>

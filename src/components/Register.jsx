@@ -9,6 +9,7 @@ export default function Register() {
     password: "",
     firstName: "",
     lastName: "",
+    phone: "", // ✅ Added phone
     role: "CUSTOMER",
   });
   const [message, setMessage] = useState("");
@@ -52,6 +53,7 @@ export default function Register() {
       width: "100%",
       borderRadius: "5px",
       fontSize: "1rem",
+      fontWeight: "600",
     },
   };
  
@@ -63,15 +65,17 @@ export default function Register() {
     e.preventDefault();
     try {
       await AuthService.register(form);
-      setMessage("User registered successfully!");
+      setMessage("✅ User registered successfully!");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      setMessage("Registration failed. Please try again.");
+      console.error("Registration failed:", err);
+      setMessage("❌ Registration failed. Please try again.");
     }
   };
  
   return (
     <div style={styles.container}>
+      {/* Left Red Panel */}
       <div style={styles.leftPanel}>
         <h1>Join MyBrokerly Today</h1>
         <p>
@@ -79,6 +83,7 @@ export default function Register() {
         </p>
       </div>
  
+      {/* Right White Panel */}
       <div style={styles.rightPanel}>
         <div style={styles.card}>
           <h3 className="text-center mb-3" style={{ color: "#b30000" }}>
@@ -119,6 +124,17 @@ export default function Register() {
               className="form-control mb-2"
               placeholder="Last Name"
               onChange={handleChange}
+            />
+            {/* ✅ New Phone Field */}
+            <input
+              name="phone"
+              type="tel"
+              className="form-control mb-3"
+              placeholder="Phone Number"
+              onChange={handleChange}
+              pattern="[0-9]{10}"
+              title="Enter a valid 10-digit phone number"
+              required
             />
             <select
               name="role"

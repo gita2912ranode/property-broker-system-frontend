@@ -24,7 +24,7 @@ export default function PropertySearch() {
   const user = AuthService.getCurrentUser();
   const navigate = useNavigate();
  
-  // Load properties on component mount
+  // ✅ Load properties on mount
   useEffect(() => {
     fetchAllProperties(0);
   }, []);
@@ -254,11 +254,13 @@ export default function PropertySearch() {
                     }}
                   />
                 </div>
+ 
                 <div className="col-md-6">
                   <div className="card-body">
                     <h5
                       className="card-title mb-1"
-                      style={{ color: "#b30000" }}
+                      style={{ color: "#b30000", cursor: "pointer" }}
+                      onClick={() => navigate(`/properties/${p.id}`)}
                     >
                       {p.title || `${p.bedrooms} BHK ${p.propertyType}`}
                     </h5>
@@ -266,8 +268,8 @@ export default function PropertySearch() {
                       {p.city}, {p.state}
                     </p>
                     <p className="card-text mb-0">
-                      🛏 {p.bedrooms || "-"} Beds | 🛁 {p.bathrooms || "-"}{" "}
-                      Baths <br />
+                      🛏 {p.bedrooms || "-"} Beds | 🛁 {p.bathrooms || "-"} Baths
+                      <br />
                       💰 Price:{" "}
                       <span style={styles.priceTag}>
                         ₹{p.price?.toLocaleString()}
@@ -275,12 +277,49 @@ export default function PropertySearch() {
                     </p>
                   </div>
                 </div>
+ 
+                {/* ✅ Contact Details Section */}
                 <div className="col-md-3 text-end pe-4">
-                  <p style={styles.priceTag}>
-                    ₹{p.price?.toLocaleString()}
-                  </p>
-                  <button style={styles.redButton}>Contact Agent</button>
-                  <button style={styles.outlineButton}>Get Phone No.</button>
+                  <p style={styles.priceTag}>₹{p.price?.toLocaleString()}</p>
+ 
+                  <button
+                    style={styles.redButton}
+                    onClick={() =>
+                      setProperties((prev) =>
+                        prev.map((prop) =>
+                          prop.id === p.id
+                            ? { ...prop, showContact: !prop.showContact }
+                            : prop
+                        )
+                      )
+                    }
+                  >
+                    {p.showContact ? "Hide Contact" : "Get Contact Details"}
+                  </button>
+ 
+                  {p.showContact && p.owner && (
+                    <div
+                      className="text-start mt-2 p-2"
+                      style={{
+                        backgroundColor: "#f8d7da",
+                        borderRadius: "8px",
+                        color: "#b30000",
+                        fontSize: "0.9rem",
+                        fontWeight: "500",
+                      }}
+                    >
+                      <p className="mb-1">
+                        <strong>Name:</strong> {p.owner.firstName}{" "}
+                        {p.owner.lastName}
+                      </p>
+                      <p className="mb-1">
+                        <strong>Email:</strong> {p.owner.email}
+                      </p>
+                      <p className="mb-0">
+                        <strong>Phone:</strong> {p.owner.phone || "N/A"}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
