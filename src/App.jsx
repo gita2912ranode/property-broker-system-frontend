@@ -6,6 +6,9 @@ import Register from "./components/Register";
 import Welcome from "./components/Welcome";
 import PrivateRoute from "./components/PrivateRoute";
 import PropertySearch from "./components/PropertySearch";
+import AddProperty from "./components/AddProperty";
+import MyProperties from "./components/myProperties";
+import UpdateProperty from "./components/UpdateProperty";
  
 function App() {
   return (
@@ -29,6 +32,23 @@ function App() {
             <PropertySearch/>
           </PrivateRoute>
         }/>
+        <Route
+    path="/add-property"
+    element={
+      <PrivateRoute>
+        <AddProperty />
+      </PrivateRoute>
+  }
+/>
+<Route
+  path="/my-properties"
+  element={
+    <PrivateRoute>
+      <MyProperties />
+    </PrivateRoute>
+  }
+/>
+<Route path="/update-property/:id" element={<UpdateProperty />} />
       </Routes>
     </Router>
   );

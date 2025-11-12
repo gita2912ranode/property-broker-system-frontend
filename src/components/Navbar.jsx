@@ -99,6 +99,12 @@ export default function Navbar() {
  
         {user && (
           <>
+         <span style={styles.link} onClick={() => navigate("/my-properties")}>
+      🏡 My Properties
+    </span>
+    <span style={styles.link} onClick={() => navigate("/add-property")}>
+      ➕ Add Property
+    </span>
             <span style={styles.userBox}>
               👤 {user.username} 
             </span>
